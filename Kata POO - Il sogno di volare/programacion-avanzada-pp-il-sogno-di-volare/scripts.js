@@ -49,8 +49,8 @@ class Gallery {
   };
 
   getAll = function () {
-    const allImages = this.militaryImages.concat(this.civilImages);
-    return allImages[Math.floor(Math.random() * allImages.length)];
+    const allImages = [...this.civilImages, ...this.militaryImages];
+    return allImages;
   };
 }
 
@@ -59,13 +59,28 @@ class Painter {
     this.createGallery();
   }
 
-  createGallery() {}
+  createGallery = function () {
+    this.gallery = document.createElement("section");
+    document.body.append(this.gallery);
+  };
 
-  createImageTag(imageUrl) {}
+  createImageTag(imageUrl) {
+    const picture = document.createElement("picture");
+    const img = document.createElement("img");
+    picture.appendChild(img);
+    img.src = imageUrl;
+    return picture;
+  }
 
-  paintSingleImage(imageUrl) {}
+  paintSingleImage(imageUrl) {
+    this.gallery.appendChild(this.createImageTag(imageUrl));
+  }
 
-  paintMultipleImages(arrayOfImages) {}
+  paintMultipleImages(arrayOfImages) {
+    for (const image of arrayOfImages) {
+      this.paintSingleImage(image);
+    }
+  }
 }
 
 const aircrafts = new Gallery(civilAircrafts, militaryAircrafts);
